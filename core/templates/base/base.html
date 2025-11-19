@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Ícone e Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="shortcut icon" href="{% static 'admin/images/sop+logo.avif' %}" />
+    <link rel="icon" href="{% static 'admin/images/sop+logo.avif' %}">
+    <title>{{ pagina.titulo|default:"SOP Docs" }}</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Estilos próprios -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body class="bg-light">
+
+<!-- ================= HEADER ================= -->
+<nav class="navbar navbar-expand-lg" style="background-color: #8f5bbd;">
+    <div class="container-fluid nav-menu">
+        <a class="navbar-brand text-white fw-bold" href="{% url 'home' %}">
+            SOP Docs
+        </a>
+
+        <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'home' %}">Home</a>
+                </li>
+
+                {% for m in menus_principais %}
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ m.get_absolute_url }}">{{ m.nome }}</a>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<!-- ================= LAYOUT PRINCIPAL ================= -->
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="col-md-3 col-lg-2 bg-white border-end vh-100 p-3 d-none d-md-block">
+            <h6 class="text-uppercase text-muted">Conteúdo</h6>
+            <ul class="nav flex-column">
+
+                {% if menus_laterais %}
+                    {% for ml in menus_laterais %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ ml.get_absolute_url }}">
+                            {{ ml.nome }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="text-muted small">Nenhum conteúdo nesta seção.</li>
+                {% endif %}
+
+            </ul>
+        </aside>
+
+
+        <!-- ===== CONTEÚDO ===== -->
+        <main class="col-md-9 col-lg-10 p-4">
+            {% block conteudo %}{% endblock %}
+        </main>
+
+    </div>
+</div>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

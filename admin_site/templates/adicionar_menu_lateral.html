@@ -1,0 +1,50 @@
+{% extends "base/base-admin.html" %}
+{% block title %}Menus Laterais de {{ pagina.titulo }}{% endblock %}
+
+{% block content %}
+<h3>Menus Laterais da Página: <strong>{{ pagina.titulo }}</strong></h3>
+<hr>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="row gx-3">
+        <div class="col-lg-6 col-sm-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <label class="form-label">Nome do Item</label>
+                    <input type="text" class="form-control" name="nome" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <label class="form-label">Ordem</label>
+                    <input type="number" class="form-control" name="ordem" value="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button class="btn btn-primary">Adicionar Item</button>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+<h4>Itens já cadastrados</h4>
+<ul class="list-group">
+    {% for item in itens %}
+        <li class="list-group-item d-flex justify-content-between">
+            {{ item.nome }}
+            <span class="badge bg-secondary">Ordem: {{ item.ordem }}</span>
+        </li>
+    {% empty %}
+        <li class="list-group-item">Nenhum item cadastrado.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

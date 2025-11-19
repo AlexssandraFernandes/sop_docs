@@ -1,0 +1,119 @@
+{% extends "base/base-admin.html" %}
+{% load static %}
+
+{% block title %}Páginas{% endblock %}
+
+{% block content %}
+
+<div class="row gx-3">
+  <div class="col-12">
+    <div class="card mb-3">
+
+      <div class="card-header d-flex justify-content-between">
+        <h5 class="card-title">Lista de Páginas</h5>
+        <a href="{% url 'criar_pagina' %}">
+          <button class="btn btn-primary">Criar Nova Página</button>
+        </a>
+      </div>
+
+      <div class="card-body">
+
+        <!-- =================== FILTROS =================== -->
+        <form method="GET" class="row gx-2">
+
+          <div class="col-md-4 col-sm-12 mb-2">
+            <input type="text" name="titulo" class="form-control"
+                   placeholder="Buscar por título..."
+                   value="{{ request.GET.titulo }}">
+          </div>
+
+          <div class="col-md-3 col-sm-6 mb-2">
+            <select name="menu_principal" class="form-control">
+              <option value="">Menu Principal</option>
+              {% for mp in menus_principais %}
+                <option value="{{ mp.id }}" {% if request.GET.menu_principal == mp.id|stringformat:'s' %}selected{% endif %}>
+                  {{ mp.nome }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md-3 col-sm-6 mb-2">
+            <select name="menu_lateral" class="form-control">
+              <option value="">Menu Lateral</option>
+              {% for ml in menus_laterais %}
+                <option value="{{ ml.id }}" {% if request.GET.menu_lateral == ml.id|stringformat:'s' %}selected{% endif %}>
+                  {{ ml.nome }} — ({{ ml.pagina.titulo }})
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-md-2 col-sm-12 mb-2">
+            <button class="btn btn-info w-100">Filtrar</button>
+          </div>
+        </form>
+        <!-- =================== /FILTROS =================== -->
+
+
+        <!-- =================== TABELA =================== -->
+        <div class="table-responsive mt-3">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Título</th>
+                <th>Menu Principal</th>
+                <th>Menus Laterais</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for pagina in paginas %}
+              <tr>
+                <td>{{ pagina.id }}</td>
+                <td>{{ pagina.titulo }}</td>
+
+                <td>
+                  {% if pagina.menu_principal %}
+                    {{ pagina.menu_principal.nome }}
+                  {% else %}
+                    <span class="text-muted">—</span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% for ml in pagina.menus_laterais.all %}
+                    <span class="badge bg-secondary">{{ ml.nome }}</span>
+                  {% empty %}
+                    <span class="text-muted">Nenhum</span>
+                  {% endfor %}
+                </td>
+
+                <td class="d-flex gap-1">
+                  <a href="{% url 'adicionar_menu_lateral' pagina.id %}" class="btn btn-outline-info btn-sm">
+                    Gerenciar Menus Laterais
+                  </a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center py-4 text-muted">
+                  Nenhuma página encontrada.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+
+          </table>
+        </div>
+        <!-- =================== /TABELA =================== -->
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

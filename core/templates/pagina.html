@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+
+{% block conteudo %}
+<div class="bg-white p-4 rounded shadow-sm">
+
+    <h1 class="fw-bold">{{ pagina.titulo }}</h1>
+    <hr>
+
+    <div class="mt-3">
+        {{ pagina.conteudo_html|safe }}
+    </div>
+
+</div>
+{% endblock %}

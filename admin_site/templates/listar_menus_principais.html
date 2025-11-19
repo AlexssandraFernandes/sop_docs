@@ -1,0 +1,80 @@
+{% extends "base/base-admin.html" %}
+{% load static %}
+
+{% block title %}Menus Principais{% endblock %}
+
+{% block content %}
+
+<div class="row gx-3">
+  <div class="col-12">
+    <div class="card mb-3">
+
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title m-0">Menus Principais</h5>
+
+        <a href="{% url 'criar_menu_principal' %}">
+          <button class="btn btn-primary">Criar Novo Menu</button>
+        </a>
+      </div>
+
+      <div class="card-body">
+
+        <!-- =================== FILTRO =================== -->
+        <form method="GET" class="row gx-2 mb-3">
+
+          <div class="col-md-6 col-sm-12 mb-2">
+            <input type="text"
+                   name="nome"
+                   class="form-control"
+                   placeholder="Buscar por nome..."
+                   value="{{ request.GET.nome }}">
+          </div>
+
+          <div class="col-md-2 col-sm-12 mb-2">
+            <button class="btn btn-info w-100">Filtrar</button>
+          </div>
+        </form>
+        <!-- =================== /FILTRO =================== -->
+
+
+        <!-- =================== TABELA =================== -->
+        <div class="table-responsive">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Slug</th>
+                <th>Ordem</th>
+                <th>Qtd. Páginas</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for menu in menus %}
+              <tr>
+                <td>{{ menu.id }}</td>
+                <td>{{ menu.nome }}</td>
+                <td><span class="badge bg-secondary">{{ menu.slug }}</span></td>
+                <td>{{ menu.ordem }}</td>
+                <td>{{ menu.pagina_set.count }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center py-4 text-muted">
+                  Nenhum menu encontrado.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- =================== /TABELA =================== -->
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

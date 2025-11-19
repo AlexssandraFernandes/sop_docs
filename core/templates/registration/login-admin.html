@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculdade Malta - Login Administrativo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <!-- Icomoon Font Icons css -->
+  <link rel="stylesheet" href="{% static 'admin/fonts/icomoon/style.css' %}"/>
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'admin/css/main.min.css' %}" />
+  <!-- Ícone e Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'admin/images/malta-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'admin/images/malta-icon.png' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'admin/images/malta-icon.png' %}">
+  <link rel="icon" type="image/x-icon" href="{% static 'admin/images/malta-icon.png' %}">
+  <link rel="shortcut icon" href="{% static 'admin/images/malta-icon.png' %}" />
+  <link rel="icon" href="{% static 'admin/images/malta-icon.png' %}">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url({% static 'admin/images/bg1.jpg' %});
+      background-size: cover;
+      background-position: center;
+      padding: 1rem;
+    }
+
+    .login-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      max-width: 930px;
+      background-color: #fff;
+      border-radius: 10px;
+      width: 100%;
+    }
+
+    .login-container form {
+      max-width: 310px;
+      width: 100%;
+    }
+
+    .logo {
+      max-width: 300px;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .form-control {
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .btn-primary {
+      background-color: #0077b6;
+      border: none;
+      padding: 10px;
+      font-size: 1.1rem;
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background-color: #005f8a;
+    }
+
+    .messages {
+      margin-bottom: 1rem;
+    }
+
+    .div-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 300px;
+      width: 100%;
+    }
+
+    .faixa {
+      display: flex;
+      height: 290px;
+      width: 1px;
+      background: gainsboro;
+    }
+
+    @media (max-width: 768px) {
+      .login-container {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+
+      .faixa {
+        display: none;
+      }
+
+      .div-logo {
+        max-width: 100%;
+      }
+
+      .logo {
+        max-width: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <a href="{% url 'login-user' %}" class="div-logo">
+      <img src="{% static 'admin/images/logo-vermelha-malta.png' %}" class="logo" alt="Faculdade Malta" />
+    </a>
+    <div class="faixa"></div>
+    <form method="POST">
+      {% csrf_token %}
+
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <input type="hidden" name="next" value="{{ next }}">
+
+      <div class="mb-3">
+        <label for="username" class="form-label">E-mail</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Senha</label>
+        <div class="input-group">
+          <input type="password" class="form-control" id="password" name="password" required>
+          <button type="button" class="input-group-text" onclick="togglePasswordByIdSenha('password', 'toggleIconLogin')">
+            <i class="sa icon-eye" id="toggleIconLogin"></i>
+          </button>          
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
+  </div>
+  <script src="{% static 'admin/js/toogle-password.js' %}"></script>
+</body>
+
+</html>

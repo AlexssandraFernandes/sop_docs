@@ -1,0 +1,491 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Meta -->
+    <meta property="og:title" content="Faculdade Malta - Seu futuro começa agora, e nós queremos fazer parte da sua história.">
+    <meta property="og:url" content="https://www.bootstrap.gallery">
+    <meta property="og:description" content="Seu futuro começa agora, e nós queremos fazer parte da sua história.">
+    <meta property="og:site_name" content="{{nome_instituicao}}">
+    <meta property="og:type" content="Website">
+  
+    <meta name="description" content="Seu futuro começa agora, e nós queremos fazer parte da sua história." />
+    <meta name="author" content="{{nome_instituicao}}" />
+    <!-- Ícone e Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'admin/images/sop+logo.avif' %}">
+    <link rel="shortcut icon" href="{% static 'admin/images/sop+logo.avif' %}" />
+    <link rel="icon" href="{% static 'admin/images/sop+logo.avif' %}">
+    {% block styles %}
+
+    {% endblock %}
+    <!-- Quill CSS -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+    <!-- Quill JS -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    
+    <!-- *************
+			************ CSS Files *************
+		************* -->
+    <!-- Icomoon Font Icons css -->
+    <link rel="stylesheet" href="{% static 'admin/fonts/icomoon/style.css' %}" />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'admin/css/main.min.css' %}" />
+
+    <!-- Scrollbar CSS -->
+    <link rel="stylesheet" href="{% static 'admin/js/overlay-scroll/OverlayScrollbars.min.css' %}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Page wrapper start -->
+    <div class="page-wrapper">
+
+        <!-- App container starts -->
+        <div class="app-container">
+
+            <!-- App header starts -->
+            <div class="app-header d-flex align-items-center">
+
+                <!-- Container starts -->
+                <div class="container">
+
+                    <!-- Row starts -->
+                    <div class="row gx-3">
+                        <div class="col-md-3 col-2">
+
+                            <!-- App brand starts -->
+                            <div class="app-brand">
+                                <a href="" class="d-lg-block d-none">
+                                    <p>SOP Docs</p>
+                                </a>
+                                <a href="" class="d-lg-none d-md-block">
+                                    <p>SOP Docs</p>
+                                </a>
+                            </div>
+                            <!-- App brand ends -->
+
+                        </div>
+
+                        <div class="col-md-9 col-10">
+
+                            <!-- App header actions start -->
+                            <div class="header-actions col">
+
+                                <!-- Search container start -->
+                                <div class="search-container d-none d-lg-block">
+                                    <input type="text" id="search" class="form-control" placeholder="Pesquisar" />
+                                    <i class="icon-search"></i>
+                                </div>
+                                <!-- Search container end -->
+
+                                <div class="d-sm-flex d-none align-items-center gap-2">
+                                    <!-- <div class="dropdown">
+                                        <a class="dropdown-toggle header-action-icon" href="#!" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="icon-warning fs-4 lh-1 text-white"></i>
+                                            {% if notificacoes_falsas|length > 0 %}
+                                                <span class="count">
+                                                    {% if notificacoes_falsas|length > 99 %}
+                                                        99+
+                                                    {% else %}
+                                                        {{ notificacoes_falsas|length }}
+                                                    {% endif %}
+                                                </span>
+                                            {% endif %}
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-md">
+                                            <style>
+                                                .icons-box.md {
+                                                    width: 48px;
+                                                    height: 48px;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    flex-shrink: 0;
+                                                }
+
+                                                .notificacoes-scroll {
+                                                    max-height: 400px;
+                                                    overflow-y: auto;
+                                                }
+
+                                                .notificacoes-scroll::-webkit-scrollbar {
+                                                    width: 6px;
+                                                }
+
+                                                .notificacoes-scroll::-webkit-scrollbar-thumb {
+                                                    background-color: rgba(0, 0, 0, 0.2);
+                                                    border-radius: 3px;
+                                                }
+                                            </style>
+
+                                            <h5 class="fw-semibold px-3 py-2 text-primary">Notificações</h5>
+
+                                            {% if notificacoes_falsas %}
+                                                <div class="notificacoes-scroll">
+                                                    {% for n in notificacoes_falsas %}
+                                                        <div class="dropdown-item">
+                                                            <div class="d-flex py-2">
+                                                                <div class="icons-box md {% if not n.lida %}bg-warning{% else %}bg-secondary{% endif %} rounded-circle me-3">
+                                                                    <i class="icon-warning text-white fs-4"></i>
+                                                                </div>
+                                                                <div class="m-0">
+                                                                    <h6 class="mb-1 fw-semibold">Sistema</h6>
+                                                                    <p class="mb-1 text-secondary text-wrap">{{ n.mensagem }}</p>
+                                                                    <p class="small m-0 text-secondary">{{ n.criacao }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                                <div class="d-grid mx-3 my-1">
+                                                    <a href="#" class="btn btn-outline-primary">Marcar todas como lidas</a>
+                                                </div>
+                                            {% else %}
+                                                <p class="px-3 py-2 text-muted">Nenhuma notificação encontrada.</p>
+                                            {% endif %}
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="dropdown">
+                                        <a class="dropdown-toggle header-action-icon" href="#!" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="icon-drafts fs-4 lh-1 text-white"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-md">
+                                            <h5 class="fw-semibold px-3 py-2 text-primary">
+                                                Mensagens
+                                            </h5>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="dropdown ms-3">
+                                    <a id="userSettings"
+                                        class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none"
+                                        href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {% if imagem_perfil_admin %}
+                                        <img src="data:image/jpeg;base64,{{ imagem_perfil_admin }}" class="rounded-2 img-3x" alt="Bootstrap Gallery" />
+                                        {% elif user.first_name and user.last_name %}
+                                        <p class="useriniciais">{{ user.first_name.0 }}{{ user.last_name.0 }}</p>
+                                        <style>
+                                            .useriniciais {
+                                                color: white;
+                                                padding: .8rem;
+                                                border-radius: 50%;
+                                                background-color: #dcdcdc5e;
+                                                font-weight: 700;
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                                margin-bottom: 0;
+                                                width: 2.5rem;
+                                                height: 2.5rem;
+                                            }
+                                        </style>
+                                        {% endif %}
+                                        <div class="ms-2 text-truncate d-lg-block d-none text-white">
+                                            <span class="d-flex opacity-50 small">{{ request.user.perfil.tipo_usuario|capfirst }}</span>
+
+                                            <span>{% if user.first_name and user.last_name %}
+                                                {{ user.first_name }} {{ user.last_name }}
+                                                {% else %}
+                                                {{ user.username }}
+                                                {% endif %}</span>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        
+                                        <form action="{% url 'logout' %}" method="post" class="mx-3 mt-2 d-grid">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger">Sair</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Toggle Menu starts -->
+                                <button class="btn btn-warning ms-3 d-lg-none d-md-block" type="button"
+                                    data-bs-toggle="offcanvas" data-bs-target="#MobileMenu"
+                                    style="border: none; background-color: transparent; color: #fff; font-size: 1.5rem; padding: 0.5rem 1rem;">
+                                    <i class="icon-menu"></i>
+                                </button>
+                                <!-- Toggle Menu ends -->
+
+                            </div>
+                            <!-- App header actions end -->
+
+                        </div>
+                    </div>
+                    <!-- Row ends -->
+
+                </div>
+                <!-- Container ends -->
+
+            </div>
+            <!-- App header ends -->
+
+            <!-- App navbar starts -->
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <div class="offcanvas offcanvas-end" id="MobileMenu">
+                        <div class="offcanvas-header">
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="offcanvas" style="margin-left: 1rem; border: none; background-color: transparent; color: #fff; font-size: 1.5rem; padding: 0.5rem 1rem;">
+                                <i class="icon-clear"></i>
+                            </button>
+                        </div>
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item dropdown {{active_menu}}">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    <i class="icon-stacked_line_chart"></i>
+                                    Menu Principal
+                                </a>
+                                <ul class="dropdown-menu dropdown-megamenu">
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'listar_menus_principais' %}">
+                                            <span style="margin-left:10px">Listar Menus</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown {{active_pagina}}">
+                                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">
+                                    <i class="fs icon-add"></i>
+                                    Páginas
+                                </a>
+                                <ul class="dropdown-menu dropdown-megamenu">
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'listar_paginas' %}">
+                                            <span style="margin-left:10px">Minhas Páginas</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- <li class="nav-item dropdown {{active_solicitacoes}}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fs icon-add"></i>Solicitações
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Todas as solicitações</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Recusadas</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Em Análise</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Aprovadas</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Recebidas</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown {{active_customizacao}}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="icon-brush"></i>Customização
+                                </a>
+                                <ul class="dropdown-menu dropdown-megamenu">
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Informações da instituicao</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Banner Principal</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li> -->
+                            <li class="nav-item dropdown {{active_gerencial}}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="icon-business"></i>Menu Lateral
+                                </a>
+                                <ul class="dropdown-menu dropdown-megamenu">
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Em breve!</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- <li class="nav-item dropdown {{active_candidatos}}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fs icon-people_outline"></i>Candidatos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Listar candidatos</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Meus candidatos</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown {{active_vagas}}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="icon-add_task"></i>Vagas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <li>
+                                            <a class="dropdown-item" href=""><span>Listar vagas</span></a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href=""><span>Minhas vagas</span></a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href=""><span>Nova vaga</span></a>
+                                        </li>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown {{active_cursos}}">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="icon-book-open"></i>Educacional
+                                </a>
+                                <ul class="dropdown-menu dropdown-megamenu">
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Lista de Cursos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Novo Curso</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Lista de Categorias</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="">
+                                            <span>Nova Categoria</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item {{active_alunos}}">
+                                <a class="nav-link" href=""><i class="icon-supervised_user_circle"></i>
+                                    Alunos
+                                </a>
+                            </li> -->
+                            <!-- <li class="nav-item dropdown {{active_instituicao}}">
+                                <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="icon-school"></i> Bolsas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Minhas bolsas</span></a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Nova bolsa</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown {{active_empresas}}">
+                                <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="icon-business"></i> Minha empresa
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href=""><span>Meus dados</span></a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+            </nav>
+            <!-- App Navbar ends -->
+
+            <!-- App body starts -->
+            <div class="app-body">
+
+                <!-- Container starts -->
+                <div class="container">
+
+                    <!-- Row start -->
+                    <div class="row gx-3">
+                        <div class="col-12 col-xl-6">
+                            <!-- Breadcrumb start -->
+                            <ol class="breadcrumb mb-3">
+                                <li class="breadcrumb-item">
+                                    <i class="icon-house_siding lh-1"></i>
+                                    <a href="" class="text-decoration-none">Home</a>
+                                </li>
+                                {% if ante_titulo_pagina %}
+                                    <li class="breadcrumb-item">{{ ante_titulo_pagina }}</a></li>
+                                {% endif %}
+                                {% if titulo_pagina %}
+                                <li class="breadcrumb-item">{{ titulo_pagina }}</li>
+                                {% endif %}
+                            </ol>
+                            <!-- Breadcrumb end -->
+                        </div>
+                    </div>
+                    <!-- Row end -->
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+                <!-- Container ends -->
+            </div>
+            <!-- App body ends -->
+
+            <!-- App footer start -->
+            <div class="app-footer">
+                <div class="container">
+                    <span>SOP Docs © 2025</span>
+                </div>
+            </div>
+            <!-- App footer end -->
+
+        </div>
+        <!-- App container ends -->
+
+    </div>
+    <!-- Page wrapper end -->
+    <!-- *************
+			************ JavaScript Files *************
+		************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="{% static 'admin/js/jquery.min.js' %}"></script>
+    <script src="{% static 'admin/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Overlay Scroll JS -->
+    <script src="{% static 'admin/js/overlay-scroll/jquery.overlayScrollbars.min.js' %}"></script>
+    <script src="{% static 'admin/js/overlay-scroll/custom-scrollbar.js' %}"></script>
+
+    <!-- Apex Charts -->
+    <script src="{% static 'admin/js/apex/apexcharts.min.js' %}"></script>
+    <!-- Custom JS files -->
+    <script src="{% static 'admin/js/custom.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+</body>
+
+</html>

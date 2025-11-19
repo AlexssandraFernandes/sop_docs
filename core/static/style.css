@@ -1,0 +1,42 @@
+/* Sidebar links */
+aside .nav-link {
+    color: #0C4B33;
+    padding: .4rem .2rem;
+    border-radius: 4px;
+}
+
+aside .nav-link:hover {
+    background-color: #e7f3ef;
+}
+
+/* Conteúdo */
+main {
+    background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar-nav .nav-link {
+    font-weight: 500;
+}
+
+/* Documento */
+h1, h2, h3, h4 {
+    color: #0C4B33;
+}
+
+/* Melhor leitura */
+p, li {
+    font-size: 1.05rem;
+}
+
+/* Scroll fixo sidebar */
+aside {
+    position: sticky;
+    top: 0;
+}
+
+.nav-menu {
+    --bs-gutter-nav: 8rem;
+    padding-right: calc(var(--bs-gutter-nav) * .5);
+    padding-left: calc(var(--bs-gutter-nav) * .5);
+}

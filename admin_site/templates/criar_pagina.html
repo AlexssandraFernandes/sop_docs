@@ -1,0 +1,96 @@
+{% extends "base/base-admin.html" %}
+{% load static %}
+
+{% block title %}Criar Página{% endblock %}
+{% block styles %}{% endblock %}
+
+{% block content %}
+<form class="row gx-3" method="POST" data-submit-target="criar-pagina">
+  {% csrf_token %}
+
+  {% if messages %}
+    <div class="col-12">
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+
+  <!-- ===================== TÍTULO ===================== -->
+  <div class="col-lg-6 col-sm-12">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label">Título da Página</label>
+        <input type="text" name="titulo" class="form-control" required placeholder="Ex: Introdução ao Sistema" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MENU PRINCIPAL ===================== -->
+  <div class="col-lg-6 col-sm-12">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label">Menu Principal</label>
+        <select name="menu_principal" class="form-control">
+          <option value="">Nenhum</option>
+          {% for menu in menus %}
+            <option value="{{ menu.id }}">{{ menu.nome }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== EDITOR HTML ===================== -->
+  <div class="col-12">
+    <div class="card mb-3">
+      <div class="card-body">
+        <label class="form-label">Conteúdo da Página</label>
+
+        <!-- Editor visual -->
+        <div id="editor" data-conteudo=""></div>
+
+        <!-- Conteúdo será transferido do editor pra textarea -->
+        <textarea name="conteudo" id="conteudo" hidden required></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== BOTÃO ===================== -->
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit" data-submit="criar-pagina">
+      Criar Página
+    </button>
+  </div>
+
+</form>
+
+<!-- Barra de progresso (após envio) -->
+<div id="progress-container" class="d-none"
+  style="height: 300px; display: flex; justify-content: center; align-items: center;">
+  <div class="progress w-50">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+         role="progressbar" style="width: 100%"
+         aria-valuemin="0" aria-valuemax="100">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'admin/js/editor-texto.js' %}"></script>
+<script>
+  // Copia o conteúdo do editor para o textarea antes de enviar
+  const form = document.querySelector('form');
+  const editorDiv = document.querySelector('#editor');
+  const conteudoInput = document.querySelector('#conteudo');
+
+  form.addEventListener('submit', function() {
+    conteudoInput.value = window.editorTexto.getHTML(); // do seu editor-texto.js
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base/base-admin.html" %}
+{% load static %}
+
+{% block title %}Criar Menu Principal{% endblock %}
+
+{% block content %}
+
+<div class="row gx-3">
+
+  <!-- MENSAGENS -->
+  {% if messages %}
+    <div class="col-12">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- FORMULÁRIO -->
+  <div class="col-lg-6 col-sm-12">
+    <div class="card mb-3">
+      <div class="card-body">
+
+        <h4 class="mb-3">Criar Menu Principal</h4>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <label class="form-label">Nome do Menu</label>
+          <input type="text" name="nome" class="form-control mb-3" required placeholder="Ex: Introdução" />
+
+          <label class="form-label">Ordem</label>
+          <input type="number" name="ordem" class="form-control mb-3" min="0" value="0" />
+
+          <button class="btn btn-primary" type="submit">Criar Menu</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTA DOS MENUS JÁ EXISTENTES -->
+  <div class="col-lg-6 col-sm-12">
+    <div class="card mb-3">
+      <div class="card-body">
+
+        <h4 class="mb-3">Menus Cadastrados</h4>
+
+        <ul class="list-group">
+          {% for m in menus %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>
+                <strong>{{ m.nome }}</strong>
+                <small class="text-muted">(ordem: {{ m.ordem }})</small>
+              </span>
+              <span class="badge bg-secondary">{{ m.slug }}</span>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-center text-muted">
+              Nenhum menu cadastrado ainda.
+            </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
